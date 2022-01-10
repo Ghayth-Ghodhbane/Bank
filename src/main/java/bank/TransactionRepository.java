@@ -1,15 +1,18 @@
 package bank;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TransactionRepository {
 
+    private final List<Transaction> transactions = new ArrayList<>();
+
     public void add(Transaction transaction) {
-        // TODO
+        transactions.add(transaction);
     }
 
-    public List<Transaction> findAll() {
-        // TODO
-        return null;
+    public List<Transaction> getTransactions() {
+        return Collections.unmodifiableList(transactions);
     }
 }

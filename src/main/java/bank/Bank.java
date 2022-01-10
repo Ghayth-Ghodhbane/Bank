@@ -24,7 +24,7 @@ public class Bank {
     }
 
     public void printStatement() {
-        List<Transaction> allTransactions = this.transactionRepository.findAll();
+        List<Transaction> allTransactions = this.transactionRepository.getTransactions();
         this.printer.print(allTransactions);
     }
 }

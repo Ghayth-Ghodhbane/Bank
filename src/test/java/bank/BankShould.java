@@ -9,9 +9,11 @@ import static java.time.LocalDate.now;
 import static java.util.List.of;
 import static org.mockito.Mockito.*;
 
-public class BankShould {
+class BankShould {
 
-    private static final int AMOUNT = 100;
+    private static final int AMOUNT_100 = 100;
+    private static final int AMOUNT_200 = 200;
+    private static final int AMOUNT_50 = 50;
 
     private TransactionRepository transactionRepository;
     private Printer printer;
@@ -26,31 +28,31 @@ public class BankShould {
 
     @Test
     void make_deposit() {
-        Transaction transaction = new Transaction(AMOUNT, now());
-        bank.deposit(AMOUNT);
+        Transaction transaction = new Transaction(AMOUNT_100, now());
+        bank.deposit(AMOUNT_100);
         verify(transactionRepository).add(transaction);
     }
 
     @Test
     void make_withdrawal() {
-        Transaction transaction = new Transaction(-AMOUNT, now());
-        bank.withdraw(AMOUNT);
+        Transaction transaction = new Transaction(-AMOUNT_100, now());
+        bank.withdraw(AMOUNT_100);
         verify(transactionRepository).add(transaction);
     }
 
     @Test
     void print_statement() {
-        when(transactionRepository.findAll()).thenReturn(allTransactions());
+        when(transactionRepository.getTransactions()).thenReturn(allTransactions());
         bank.printStatement();
-        verify(transactionRepository).findAll();
+        verify(transactionRepository).getTransactions();
         verify(printer).print(allTransactions());
     }
 
     private List<Transaction> allTransactions() {
         return of(
-                new Transaction(100, now()),
-                new Transaction(200, now()),
-                new Transaction(-50, now())
+                new Transaction(AMOUNT_100, now()),
+                new Transaction(AMOUNT_200, now()),
+                new Transaction(-AMOUNT_50, now())
         );
     }
 }
