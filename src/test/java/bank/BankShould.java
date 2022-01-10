@@ -15,15 +15,17 @@ class BankShould {
     private static final int AMOUNT_200 = 200;
     private static final int AMOUNT_50 = 50;
 
+    private Clock clock;
     private TransactionRepository transactionRepository;
     private Printer printer;
     private Bank bank;
 
     @BeforeEach
     void init() {
+        clock = spy(Clock.class);
         transactionRepository = spy(TransactionRepository.class);
         printer = mock(Printer.class);
-        bank = new Bank(transactionRepository, printer);
+        bank = new Bank(clock, transactionRepository, printer);
     }
 
     @Test
