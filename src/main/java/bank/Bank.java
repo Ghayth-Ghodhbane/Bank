@@ -1,18 +1,30 @@
 package bank;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class Bank {
+
+    private final TransactionRepository transactionRepository;
+    private final Printer printer;
+
+    public Bank(TransactionRepository transactionRepository, Printer printer) {
+        this.transactionRepository = transactionRepository;
+        this.printer = printer;
+    }
+
     public void deposit(int amount) {
-        // TODO
-        throw new UnsupportedOperationException();
+        Transaction transaction = new Transaction(amount, LocalDate.now());
+        this.transactionRepository.add(transaction);
     }
 
     public void withdraw(int amount) {
-        // TODO
-        throw new UnsupportedOperationException();
+        Transaction transaction = new Transaction(-amount, LocalDate.now());
+        this.transactionRepository.add(transaction);
     }
 
-    public void statement() {
-        // TODO
-        throw new UnsupportedOperationException();
+    public void printStatement() {
+        List<Transaction> allTransactions = this.transactionRepository.findAll();
+        this.printer.print(allTransactions);
     }
 }
